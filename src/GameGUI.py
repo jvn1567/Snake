@@ -18,4 +18,4 @@ class GameGUI(QWidget):
         self.width = TILE_SIZE*self.x + MENU_WIDTH
         self.height = TILE_SIZE*self.y
         self.setWindowTitle("Snake")
-        self.setGeometry(PANEL_XPOS, PANEL_YPOS, self.width, self.height)
+        self.setGeometry(PANEL_XPOS, PANEL_YPOS, self.width, self.y)

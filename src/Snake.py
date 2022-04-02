@@ -25,31 +25,34 @@ class PointList:
         self.front = self.front.next
         self.size -= 1
 
-    def peekX(self):
+    def back(self):
         if self.size == 0:
             raise Exception('No items in list.')
-        return self.front.x
-
-    def peekY(self):
-        if self.size == 0:
-            raise Exception('No items in list.')
-        return self.front.y
+        return (self.front.x, self.front.y)
 
 class Snake:
     def __init__(self):
         self.coords = PointList() # front of list is back of snake
+        self.reset()
 
-    def eat():
-        # add no pop
-        a = None
+    def eat(self, x, y):
+        self.coords.push(x, y)
     
-    def move():
-        # add and pop
-        a = None
+    def move(self, x, y):
+        self.coords.move(x,y)
+        self.coords.pop()
 
-    def reset():
-        # clear all
-        a = None
+    def head(self):
+        return self.coords.back()
 
-    def head():
-        return {1, 1}
+    def reset(self):
+        while self.coords.size > 0:
+            self.coords.pop()
+
+    def contains(self, x, y):
+        curr = self.coords.front
+        while curr != None:
+            if (x == curr.x and y == curr.y):
+                return True
+            curr = curr.next
+        return False
