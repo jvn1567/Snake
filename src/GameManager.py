@@ -6,31 +6,31 @@ DIRECTIONS = {'NORTH', 'EAST', 'SOUTH', 'WEST'}
 class GameManager:
     def __init__(self, xTiles, yTiles):
         self.snake = Snake()
-        self.size(xTiles, yTiles)
-        self.dir = 'EAST'
+        self.size = (xTiles, yTiles)
+        self.direction = 'EAST'
         self.newSnake()
         self.spawnFood()
 
     def newSnake(self):
         for i in range(1, 5):
-            self.snake.eat(i, self.size[1] / 2)
+            self.snake.eat(i, self.size[1] // 2)
 
-    def setDirection(self, dir):
-        if dir in DIRECTIONS:
-            self.dir = dir
+    def setDirection(self, direction):
+        if direction in DIRECTIONS:
+            self.direction = direction
         else:
             raise Exception('Invalid direction (NORTH, EAST, SOUTH, WEST).')
 
     def spawnFood(self):
-        x = random.randint(0, self.size[0])
-        y = random.randint(0, self.size[1])
+        x = random.randint(0, self.size[0] - 1)
+        y = random.randint(0, self.size[1] - 1)
         while self.snake.contains(x, y):
-            x = random.randint(0, self.size[0])
-            y = random.randint(0, self.size[1])
+            x = random.randint(0, self.size[0] - 1)
+            y = random.randint(0, self.size[1] - 1)
         self.food = (x, y)
 
     def update(self):
-        (x, y) = self.snake.head
+        (x, y) = self.snake.head()
         if (self.direction == 'NORTH'):
             y -= 1
         elif (self.direction == 'SOUTH'):
