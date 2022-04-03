@@ -5,9 +5,15 @@ DIRECTIONS = {'NORTH', 'EAST', 'SOUTH', 'WEST'}
 
 class GameManager:
     def __init__(self, xTiles, yTiles):
+        self.reset(xTiles, yTiles)
+    
+    def reset(self, xTiles, yTiles):
+        self.paused = True
+        self.gameOver = False
         self.snake = Snake()
         self.size = (xTiles, yTiles)
         self.direction = 'EAST'
+        self.prevDirection = 'EAST' # prevent reverse move
         self.newSnake()
         self.spawnFood()
 
@@ -41,10 +47,12 @@ class GameManager:
             x -= 1
         outOfBounds = x < 0 or y < 0 or x == self.size[0] or y == self.size[1]
         if outOfBounds or self.snake.contains(x, y):
-            return False
-        if (x, y) == self.food:
-            self.snake.eat(x, y)
-            self.spawnFood()
+            self.paused = True
+            self.gameOver = True
         else:
-            self.snake.move(x, y)
-        return True
+            self.prevDirection = self.direction
+            if (x, y) == self.food:
+                self.snake.eat(x, y)
+                self.spawnFood()
+            else:
+                self.snake.move(x, y)
