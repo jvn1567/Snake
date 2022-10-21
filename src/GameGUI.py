@@ -36,9 +36,9 @@ class GameGUI(QWidget):
         spacer = QVBoxLayout()
         spacer.addStretch(1)
         menuLayout = QHBoxLayout()
-        message = 'Welcome to Snake! Use WASD or Arrow Keys to move.'
+        message = 'Welcome to Snake! Use WASD to move.'
         menuLayout.addWidget(QLabel(message))
-        btnPause = QPushButton('Pause (P)', self)
+        btnPause = QPushButton('Pause (E)', self)
         btnPause.clicked.connect(self.pause)
         menuLayout.addWidget(btnPause)
         btnReset = QPushButton('Reset (R)', self)
@@ -65,19 +65,19 @@ class GameGUI(QWidget):
                     qp.fillRect(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, QColor('green'))
 
     def keyPressEvent(self, e):
-        if (e.key() == Qt.Key_P):
+        if (e.key() == Qt.Key_E):
             self.pause()
         elif (e.key() == Qt.Key_R):
             self.reset()
         if not self.manager.paused:
             prev = self.manager.prevDirection
-            if ((e.key() == Qt.Key_W) or (e.key() == Qt.Key_Up)) and prev != 'SOUTH':
+            if (e.key() == Qt.Key_W) and prev != 'SOUTH':
                 self.manager.direction = 'NORTH'
-            elif ((e.key() == Qt.Key_S) or (e.key() == Qt.Key_Down)) and prev != 'NORTH':
+            elif (e.key() == Qt.Key_S) and prev != 'NORTH':
                 self.manager.direction = 'SOUTH'
-            elif ((e.key() == Qt.Key_D) or (e.key() == Qt.Key_Right)) and prev != 'WEST':
+            elif (e.key() == Qt.Key_D) and prev != 'WEST':
                 self.manager.direction = 'EAST'
-            elif ((e.key() == Qt.Key_A) or (e.key() == Qt.Key_Left)) and prev != 'EAST':
+            elif (e.key() == Qt.Key_A) and prev != 'EAST':
                 self.manager.direction = 'WEST'
 
     def pause(self):
